@@ -1,0 +1,23 @@
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facility Details | Turf Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-medal"></i> Turf Arena
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="our-turfs.html" class="nav-link">Book Turf</a></li>
+                <li><a href="facilities.html" class="nav-link">Our Facilities</a></li>
+                <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="nearby-facilities.html" class="nav-link">Nearby Facilities</a></li>
+                <li><a href="my-bookings.html" class="nav-link">My Bookings</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li id="loginItem"><a href="#" class="btn btn-primary" id="loginLink">Demo Login</a></li>
+                <li id="profileMenu" class="profile-menu" style="display: none;">
+                    <div class="profile-icon"><i class="fas fa-user"></i>
+                        <div class="profile-dropdown">
+                            <div class="user-info-header">
+                                <div class="user-avatar-small">JD</div>
+                                <div class="user-name-label">John Doe</div>
+                                <div class="user-email-label">john.doe@example.com</div>
+                            </div>
+                            <a href="profile.html"><i class="fas fa-id-card"></i> My Profile</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'wallet')"><i
+                                    class="fas fa-wallet"></i> My Wallet</a>
+                            <a href="my-bookings.html"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                            <a href="profile.html"
+                                onclick="sessionStorage.setItem('activeProfileTab', 'notifications')"><i
+                                    class="fas fa-bell"></i> Notifications</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'security')"><i
+                                    class="fas fa-cog"></i> Account Settings</a>
+                            <div style="border-top: 1px solid var(--border); margin-top: 5px;">
+                                <a href="#" id="logoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i>
+                                    Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding: 150px 0;">
+        <div id="facilityDetailsBody"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start;">
+            <!-- Dynamic Content -->
+        </div>
+        <div style="margin-top: 50px; text-align: center;">
+            <a href="facilities.html" class="btn btn-outline"
+                style="border: 2px solid var(--primary); color: var(--primary);">Back to All Facilities</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col" style="text-align: center;">
+                <h3 style="color: white;"><i class="fas fa-medal"></i> Turf Arena</h3>
+                <p>&copy; 2026 Turf Arena Management. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/dummy-data.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const container = document.getElementById('facilityDetailsBody');
+
+            if (!id || !window.arenaData.amenities) {
+                container.innerHTML = "<h2>Facility not found</h2>";
+                return;
+            }
+
+            const item = window.arenaData.amenities.find(a => a.id === id);
+            if (!item) {
+                container.innerHTML = "<h2>Facility not found</h2>";
+                return;
+            }
+
+            container.innerHTML = `
+                <div>
+                    <img src="${item.img}" style="width: 100%; height: auto; border-radius: 20px; box-shadow: var(--shadow);">
+                </div>
+                <div>
+                    <h1 class="section-title" style="text-align: left; color: var(--primary);">${item.name}</h1>
+                    <p style="font-size: 1.2rem; color: var(--gray); margin-bottom: 30px;">${item.description}</p>
+                    <div style="background: var(--light-gray); padding: 30px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 20px;">Key Benefits</h3>
+                        <ul class="benefit-list" style="list-style: none;">
+                            ${item.benefits.map(b => `<li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-check-circle" style="color: var(--primary);"></i> ${b}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+
+</html>

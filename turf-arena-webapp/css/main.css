@@ -1,0 +1,534 @@
+:root {
+    --primary: #2e7d32;
+    --primary-dark: #1b5e20;
+    --secondary: #ffffff;
+    --accent: #212121;
+    --gray: #757575;
+    --light-gray: #f5f5f5;
+    --border: #e0e0e0;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+    --radius: 12px;
+    --radius-lg: 20px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--secondary);
+    color: var(--accent);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 30px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    text-align: center;
+    background: var(--light-gray);
+    color: var(--accent);
+    white-space: nowrap;
+    /* Prevent "Demo Login" from wrapping */
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+.section-header {
+    text-align: left;
+    margin-bottom: 30px;
+    border-left: 4px solid var(--primary);
+    padding-left: 20px;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+.footer {
+    background: var(--accent);
+    color: var(--secondary);
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col h3 {
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+/* Toast Notification */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 3000;
+}
+
+.toast {
+    background: #2e7d32;
+    color: white;
+    padding: 16px 28px;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: toastFadeIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    min-width: 280px;
+    font-weight: 500;
+    border-left: 5px solid #1b5e20;
+}
+
+@keyframes toastFadeIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast.fade-out {
+    animation: toastFadeOut 0.3s ease forwards;
+}
+
+@keyframes toastFadeOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* UI Improvements */
+section {
+    padding: 100px 0;
+}
+
+.section-header p {
+    color: var(--gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Amenity Cards */
+.amenity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.amenity-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.amenity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.amenity-card-img {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.amenity-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.amenity-card:hover .amenity-card-img img {
+    transform: scale(1.1);
+}
+
+.amenity-icon-overlay {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--primary);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.amenity-card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.amenity-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+.amenity-card-desc {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Modal Detail Improvements */
+#facilityModalBody {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+}
+
+.modal-detail-img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.benefit-list {
+    list-style: none;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.benefit-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.benefit-list li i {
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    #facilityModalBody {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-detail-img {
+        height: 250px;
+    }
+}
+
+/* ══════════════════════════════
+   FACILITY STRIP
+══════════════════════════════ */
+.facility-strip {
+    background: linear-gradient(135deg, rgba(15, 32, 39, 0.95), rgba(32, 58, 67, 0.95));
+    backdrop-filter: blur(15px);
+    z-index: 100;
+    position: relative;
+    padding: 10px 40px;
+    /* Reduced from 20px */
+    user-select: none;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+    /* Reduced from 25px */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0 0 24px 24px;
+    /* Slightly tighter radius */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Reduced from 15px */
+}
+
+/* Added a premium label for context */
+.facility-strip::before {
+    content: "📍 NEARBY AMENITIES";
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4caf50;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+/* Container for the flex layout */
+.facility-strip-container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 16px;
+    /* Consistent gap between cards */
+    overflow-x: auto;
+    /* Enable smooth horizontal scrolling */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scroll on iOS */
+    padding-bottom: 5px;
+    /* Tiny padding at bottom to prevent shadow clipping */
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+}
+
+.facility-strip-container::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Safari/Chrome */
+}
+
+/* ── Cards (shared) ── */
+.facility-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    padding: 10px 20px;
+    /* Reduced from 12px 24px */
+    min-width: 200px;
+    /* Reduced from 220px */
+    flex-shrink: 0;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.facility-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent);
+    transition: 0.5s;
+}
+
+/* Hover effects */
+.facility-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #4caf50;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(76, 175, 80, 0.2);
+}
+
+.facility-card:hover::before {
+    left: 100%;
+}
+
+/* Highlight the closest facility */
+.facility-card-closest {
+    background: rgba(76, 175, 80, 0.08);
+    border-color: #4caf50;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+    border-width: 1.5px;
+}
+
+.facility-card-closest:hover {
+    background: rgba(76, 175, 80, 0.15);
+    border-color: #81c784;
+}
+
+.facility-card-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.facility-card:hover .facility-card-icon {
+    background: #4caf50;
+    color: white;
+    transform: rotate(10deg);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
+
+.facility-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.facility-card-name {
+    color: #fff;
+    white-space: normal;
+    /* Let long texts wrap naturally instead of clipping */
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.facility-card-dist {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 2px;
+    white-space: nowrap;
+}
+
+/* Ensure container allows full width and proper scrolling at all media queries */
+@media (max-width: 768px) {
+    .facility-strip {
+        padding: 15px 15px;
+        /* Tighter padding on mobile edges */
+    }
+}
+
+/* Special Offers Section */
+.offers-section {
+    padding: 60px 0;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+}
+
+.offer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.offer-card {
+    padding: 30px;
+    border-radius: var(--radius);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: none;
+}
+
+.offer-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+}
+
+.offer-tag {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background: white;
+    color: var(--accent);
+    padding: 5px 40px;
+    transform: rotate(45deg);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.offer-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.offer-card p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+    color: white;
+}
+
+/* Nearby Facility Cards Refinement */
+.nearby-card .card-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary);
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 0.95rem;
+}
+
+.nearby-card .card-location i {
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.nearby-card .card-location i:hover {
+    transform: scale(1.2);
+}
