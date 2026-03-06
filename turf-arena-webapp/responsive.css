@@ -1,0 +1,152 @@
+/* General Responsive Adjustments */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    section {
+        padding: 50px 0;
+    }
+
+    .profile-dashboard {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        min-height: 60vh;
+        padding: 80px 0;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        padding: 0 10px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        padding: 0 20px;
+    }
+
+    .section-header {
+        text-align: center;
+        border-left: none;
+        padding-left: 0;
+        border-bottom: 3px solid var(--primary);
+        display: block;
+        margin: 0 auto 30px;
+        width: fit-content;
+        max-width: 90%;
+    }
+
+    .grid-layout,
+    .feature-grid,
+    .offer-grid,
+    .amenity-grid,
+    .review-grid,
+    .challenges-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    .facility-strip {
+        padding: 12px 10px;
+        border-radius: 0;
+    }
+
+    .facility-card {
+        min-width: 170px;
+        padding: 8px 12px;
+        gap: 12px;
+    }
+
+    /* My Bookings Card Mobile Fix */
+    .booking-card {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 15px;
+        padding: 15px !important;
+        border-left-width: 5px !important;
+    }
+
+    .booking-card>div:first-child {
+        width: 100% !important;
+        height: 200px !important;
+    }
+
+    .booking-card>div:last-child {
+        text-align: left !important;
+        min-width: 100% !important;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: space-between;
+    }
+
+    /* Navbar refine */
+    .nav-badge {
+        font-size: 0.5rem;
+        padding: 1px 4px;
+    }
+
+    .clash-icon-mini {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.7rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px 20px;
+    }
+
+    .nav-container {
+        padding: 0 12px !important;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    /* Modal Fix */
+    .modal-content {
+        padding: 15px !important;
+        width: 95% !important;
+        border-radius: 15px !important;
+    }
+
+    .modal-detail-img {
+        height: 180px !important;
+    }
+
+    .page-hero-title {
+        font-size: 1.4rem !important;
+    }
+
+    .page-hero-subtitle {
+        font-size: 0.85rem !important;
+    }
+
+    /* Facility Card on Index */
+    #homeFacilities .card-img {
+        height: 160px;
+    }
+}

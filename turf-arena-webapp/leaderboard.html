@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard | Turf Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+
+        .page-hero {
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 30px 20px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        .page-hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+
+
+        .page-hero-title-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-hero-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-hero-title i {
+            color: #f1c40f;
+            text-shadow: 0 0 20px rgba(241, 196, 15, 0.4);
+            font-size: 2.2rem;
+        }
+
+        .page-hero-subtitle {
+            color: #a8b2b7;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 0;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 20px;
+        }
+
+        .page-hero-filter {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 20px;
+            border-radius: 50px;
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-hero-filter span {
+            font-weight: 600;
+            color: #fff;
+            margin-right: 5px;
+            font-size: 1rem;
+        }
+
+        .lb-select {
+            background: #fff;
+            color: #2c3e50;
+            border: none;
+            padding: 8px 30px 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232c3e50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1rem top 50%;
+            background-size: 0.65rem auto;
+        }
+
+        .lb-select:hover {
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        #leaderboardContent {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1500px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .sport-section {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            padding: 40px 30px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sport-section:last-child {
+            border-bottom: none;
+        }
+
+        .sport-title {
+            text-align: left;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 3px solid #f1f1f1;
+            padding-bottom: 15px;
+        }
+
+        /* Podium Layout */
+        .podium-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 15px;
+            margin-bottom: 50px;
+            min-height: 280px;
+        }
+
+        .podium-card {
+            background: #fff;
+            border-radius: 16px;
+            text-align: center;
+            padding: 35px 15px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex: 1;
+            border: 1px solid var(--border);
+            max-width: 320px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .podium-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, rgba(248, 249, 250, 1) 100%);
+            border-radius: 20px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .podium-card>* {
+            z-index: 1;
+            position: relative;
+            width: 100%;
+        }
+
+        .p-rank-1 {
+            z-index: 3;
+            transform: scale(1.15);
+            border: 2px solid #f1c40f;
+            box-shadow: 0 20px 50px rgba(241, 196, 15, 0.15);
+            margin: 0 20px;
+        }
+
+        .p-rank-1::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.8), rgba(243, 156, 18, 0.3));
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .p-rank-1:hover {
+            transform: scale(1.15) translateY(-12px);
+            box-shadow: 0 25px 60px rgba(241, 196, 15, 0.25);
+        }
+
+        .p-rank-1:hover::after {
+            opacity: 1;
+        }
+
+        .p-rank-2 {
+            z-index: 2;
+            border-top: 6px solid #bdc3c7;
+            height: 95%;
+        }
+
+        .p-rank-2:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(189, 195, 199, 0.3);
+        }
+
+        .p-rank-3 {
+            z-index: 1;
+            border-top: 6px solid #cd7f32;
+            height: 90%;
+        }
+
+        .p-rank-3:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(205, 127, 50, 0.3);
+        }
+
+        .medal-badge {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            font-weight: 800;
+            position: absolute;
+            top: -37px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 3px solid #fff;
+            z-index: 5;
+        }
+
+        .p-rank-1 .medal-badge {
+            width: 90px;
+            height: 90px;
+            top: -45px;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fceabb, #f8b500);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 4px solid #fff;
+        }
+
+        .p-rank-1 .medal-badge::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px dashed #f1c40f;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .p-rank-2 .medal-badge {
+            background: linear-gradient(135deg, #e0e0e0, #bdc3c7);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .p-rank-3 .medal-badge {
+            background: linear-gradient(135deg, #e6a188, #cd7f32);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .t-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            background: rgba(46, 125, 50, 0.08);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .t-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .p-rank-1 .t-name {
+            font-size: 1.35rem;
+            color: #b8860b;
+        }
+
+        .t-zone {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .t-stats-flex {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+        }
+
+        .t-stat {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .t-stat strong {
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .p-rank-1 .t-stat strong {
+            color: #d4ac0d;
+            font-size: 1.6rem;
+        }
+
+        /* List Ranks */
+        .list-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .list-row {
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid transparent;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .list-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--primary);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .list-row:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-color: rgba(46, 125, 50, 0.2);
+        }
+
+        .list-row:hover::before {
+            opacity: 1;
+        }
+
+        .r-info-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .r-num {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #a0aab2;
+            width: 40px;
+            text-align: center;
+        }
+
+        .r-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(46, 125, 50, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .r-name-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .r-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 2px;
+        }
+
+        .r-loc {
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .r-stats-group {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .r-stat-box {
+            text-align: center;
+        }
+
+        .r-stat-box strong {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        .r-stat-box span {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .r-stat-box.pt-highlight strong {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* Detail Modal Page */
+        .lb-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 32, 39, 0.9);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .lb-modal-content {
+            background: #fff;
+            width: 95%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            animation: modalIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lb-modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lb-modal-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        @keyframes modalIn {
+            from {
+                transform: scale(0.95) translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .m-header {
+            padding: 40px 40px 30px;
+            background: linear-gradient(135deg, var(--black), #1a1a1a);
+            color: #fff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border-bottom: 5px solid var(--primary);
+        }
+
+        .m-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .m-close:hover {
+            background: #ff4757;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .m-badge {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+            transform: rotate(-5deg);
+            transition: 0.3s;
+        }
+
+        .m-badge:hover {
+            transform: rotate(0) scale(1.05);
+        }
+
+        .m-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .m-title p {
+            color: #a8b2b7;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .m-body {
+            padding: 40px;
+            background: #fdfdfd;
+        }
+
+        .m-section-title {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .m-section-title i {
+            color: var(--primary);
+        }
+
+        .stat-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .s-card {
+            background: #fff;
+            padding: 25px 15px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: 0.3s;
+        }
+
+        .s-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-color: rgba(46, 125, 50, 0.3);
+        }
+
+        .s-card strong {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .s-card.highlight strong {
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+
+        .s-card span {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .match-history {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #fff;
+            transition: 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .match-row:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .match-row.win {
+            border-left: 6px solid #2ecc71;
+        }
+
+        .match-row.loss {
+            border-left: 6px solid #e74c3c;
+        }
+
+        .m-rival {
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .m-date {
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .m-result-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: right;
+        }
+
+        .m-res-tag {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .win .m-res-tag {
+            background: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+        }
+
+        .loss .m-res-tag {
+            background: rgba(231, 76, 60, 0.15);
+            color: #c0392b;
+        }
+
+        .m-score {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--accent);
+            width: 140px;
+        }
+
+        .m-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .m-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .m-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        #imgPreview {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 6000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #imgPreview img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .close-preview {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #fff;
+            font-size: 3rem;
+            cursor: pointer;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+
+        .close-preview:hover {
+            color: #ff4757;
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        @media (max-width: 1100px) {
+            #leaderboardContent {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .stat-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .t-stat {
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lb-title {
+                font-size: 1.8rem;
+            }
+
+            .lb-hero-content {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .lb-title-group {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .lb-subtitle {
+                border-left: none;
+                padding-left: 0;
+            }
+
+            .lb-hero {
+                padding: 30px 15px;
+            }
+
+            .podium-wrapper {
+                align-items: center;
+                gap: 50px;
+                flex-direction: column;
+                margin-bottom: 40px;
+            }
+
+            .podium-card {
+                width: 100%;
+                max-width: 350px;
+                flex: none;
+                padding-top: 50px;
+            }
+
+            .p-rank-1 {
+                transform: scale(1);
+                margin: 0;
+            }
+
+            .p-rank-1:hover {
+                transform: translateY(-8px);
+            }
+
+            .p-rank-2,
+            .p-rank-3 {
+                height: auto;
+                border-top: 1px solid var(--border);
+            }
+
+            .medal-badge {
+                top: -40px;
+            }
+
+            .list-row {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .r-info-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .r-num {
+                width: auto;
+                font-size: 1.4rem;
+                margin-bottom: 5px;
+            }
+
+            .r-stats-group {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .m-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 20px 30px;
+            }
+
+            .m-badge {
+                transform: rotate(0);
+                margin-bottom: 10px;
+            }
+
+            .m-title h2 {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .m-title p {
+                justify-content: center;
+            }
+
+            .m-close {
+                top: 15px;
+                right: 15px;
+            }
+
+            .match-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+                padding: 25px 20px;
+            }
+
+            .m-result-box {
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .m-score {
+                text-align: center;
+                width: auto;
+            }
+
+            .stat-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .s-card:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .s-card {
+                padding: 15px 10px;
+            }
+
+            .s-card strong {
+                font-size: 1.8rem;
+            }
+
+            .m-body {
+                padding: 20px;
+            }
+        }
+    </style>
+    <!-- Blocking script to prevent login flicker -->
+    <script>
+        (function () {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            document.documentElement.classList.add(isLoggedIn ? 'auth-logged-in' : 'auth-logged-out');
+        })();
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-medal"></i> Turf Arena
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="our-turfs.html" class="nav-link">Book Turf <span class="nav-badge">Offers</span></a></li>
+                <li class="nav-item-dropdown">
+                    <div class="dropdown-trigger-group">
+                        <a href="facilities.html" class="nav-link">Our Facilities</a>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="facilities.html#parking" class="dropdown-item">Parking Area</a></li>
+                        <li><a href="facilities.html#lights" class="dropdown-item">Flood Lights</a></li>
+                        <li><a href="facilities.html#rooms" class="dropdown-item">Changing Rooms</a></li>
+                        <li><a href="facilities.html#washrooms" class="dropdown-item">Washrooms</a></li>
+                        <li><a href="facilities.html#water" class="dropdown-item">Drinking Water</a></li>
+                        <li><a href="facilities.html#rental" class="dropdown-item">Equipment Rental</a></li>
+                        <li><a href="facilities.html#aid" class="dropdown-item">First Aid Support</a></li>
+                    </ul>
+                </li>
+                                <li>
+                    <a href="find-opponent.html" class="nav-link nav-clash-link">
+                        <span class="clash-icon-mini">⚔</span> Find Opponent
+                        <div class="nav-clash-sparks">
+                            <span></span><span></span><span></span>
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span id="headerNotifBadge" class="menu-notif-badge" style="display: none;">0</span>
+                    </a>
+                </li>
+                <li class="nav-item-dropdown" id="leaderboardNavItem">
+                    <div class="dropdown-trigger-group">
+                        <a href="leaderboard.html" class="nav-link active"><i class="fas fa-trophy"
+                                style="color: #f1c40f;"></i> Leaderboard</a>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <div id="leaderboardDropdownMenu" class="dropdown-menu"
+                        style="padding: 15px; width: 320px; max-height: 450px; overflow-y: auto; right: -50px; left: auto;">
+                        <div
+                            style="font-weight: 700; color: var(--accent); margin-bottom: 15px; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                            <i class="fas fa-trophy" style="color: #f1c40f;"></i> Top Rankings
+                        </div>
+                        <div id="headerLeaderboardList" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Injected -->
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="leaderboard.html" class="btn btn-primary"
+                                style="padding: 5px 15px; font-size: 0.8rem; width: 100%;">View Full Leaderboard</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="gallery.html" class="nav-link"><i class="fas fa-camera"></i> Gallery</a></li>
+                <li class="nav-item-dropdown">
+                    <div class="dropdown-trigger-group">
+                        <a href="nearby-facilities.html" class="nav-link">Nearby Facilities</a>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="nearby-facilities.html#cafe" class="dropdown-item">Cafe</a></li>
+                        <li><a href="nearby-facilities.html#shop" class="dropdown-item">Sports Shop</a></li>
+                        <li><a href="nearby-facilities.html#parking" class="dropdown-item">Parking Area</a></li>
+                        <li><a href="nearby-facilities.html#juice" class="dropdown-item">Juice Center</a></li>
+                        <li><a href="nearby-facilities.html#metro" class="dropdown-item">Metro Station</a></li>
+                        <li><a href="nearby-facilities.html#bus" class="dropdown-item">Bus Stop</a></li>
+                    </ul>
+                </li>
+                <li><a href="my-bookings.html" class="nav-link">My Bookings</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li id="loginItem"><a href="#" class="btn btn-primary" id="loginLink">Demo Login</a></li>
+                <li id="profileMenu" class="profile-menu" style="display: none;">
+                    <div class="profile-icon"><i class="fas fa-user"></i>
+                        <div class="profile-dropdown">
+                            <div class="user-info-header">
+                                <div class="user-avatar-small">JD</div>
+                                <div class="user-name-label">John Doe</div>
+                                <div class="user-email-label">john.doe@example.com</div>
+                            </div>
+                            <a href="profile.html"><i class="fas fa-id-card"></i> My Profile</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'wallet')"><i
+                                    class="fas fa-wallet"></i> My Wallet</a>
+                            <a href="my-bookings.html"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                            <a href="profile.html"
+                                onclick="sessionStorage.setItem('activeProfileTab', 'notifications')"><i
+                                    class="fas fa-bell"></i> Notifications</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'security')"><i
+                                    class="fas fa-cog"></i> Account Settings</a>
+                            <div style="border-top: 1px solid var(--border); margin-top: 5px;">
+                                <a href="#" id="logoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i>
+                                    Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="universal-notif" id="universalBell" style="display: none;">
+                        <i class="fas fa-bell"></i>
+                        <div class="universal-badge" id="universalDot" style="display: none;"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Standardized Page Header -->
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="page-hero-title-group">
+                <h1 class="page-hero-title"><i class="fas fa-trophy"></i> Leaderboard</h1>
+                <p class="page-hero-subtitle">Top Teams Competing at Turf Arena</p>
+            </div>
+
+            <div class="page-hero-filter">
+                <span><i class="fas fa-filter"></i> Select Sport:</span>
+                <select id="sportFilter" class="ph-select" onchange="renderLeaderboard()">
+                    <option value="All">All Sports</option>
+                    <option value="Cricket">Cricket</option>
+                    <option value="Football">Football</option>
+                    <option value="Badminton">Badminton</option>
+                    <option value="Swimming">Swimming</option>
+                    <option value="Basketball">Basketball</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Injected Here -->
+    <div id="leaderboardContent"></div>
+
+    <!-- Detail Modal -->
+    <div id="teamDetailsModal" class="lb-modal">
+        <div class="lb-modal-content">
+            <button class="m-close" onclick="closeTeamModal()"><i class="fas fa-times"></i></button>
+            <div class="m-header">
+                <div class="m-badge" id="modalSportIcon"><i class="fas fa-users"></i></div>
+                <div class="m-title">
+                    <h2 id="modalTeamName">Team Name <i class="fas fa-check-circle"
+                            style="color: #2ecc71; font-size: 1.2rem;"></i></h2>
+                    <p id="modalSportZone"><i class="fas fa-map-marker-alt"></i> Sport • Zone</p>
+                </div>
+            </div>
+
+            <div class="m-body">
+                <div class="m-section-title"><i class="fas fa-chart-line"></i> Team Statistics</div>
+                <div class="stat-cards-grid">
+                    <div class="s-card">
+                        <strong id="m-played">0</strong>
+                        <span>Matches</span>
+                    </div>
+                    <div class="s-card">
+                        <strong id="m-won" style="color: #27ae60;">0</strong>
+                        <span>Wins</span>
+                    </div>
+                    <div class="s-card">
+                        <strong id="m-lost" style="color: #c0392b;">0</strong>
+                        <span>Losses</span>
+                    </div>
+                    <div class="s-card">
+                        <strong id="m-winpct" style="color: #2980b9;">0%</strong>
+                        <span>Win %</span>
+                    </div>
+                    <div class="s-card highlight">
+                        <strong id="m-points">0</strong>
+                        <span>Points</span>
+                    </div>
+                </div>
+
+                <div class="m-section-title"><i class="fas fa-history"></i> Match History</div>
+                <div class="match-history" id="modalMatchHistory">
+                    <!-- JS Injected -->
+                </div>
+
+                <div id="galleryContainer">
+                    <div class="m-section-title"><i class="fas fa-camera-retro"></i> Team Media & Photos</div>
+                    <div class="m-gallery" id="modalPhotos">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview -->
+    <div id="imgPreview" onclick="this.style.display='none'">
+        <i class="fas fa-times close-preview"></i>
+        <img id="previewImage" src="" alt="Preview">
+    </div>
+
+    <script src="dummy-data.js"></script>
+    <script src="navbar.js"></script>
+    <script src="login.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('sport')) {
+                document.getElementById('sportFilter').value = params.get('sport');
+            }
+            renderLeaderboard();
+        });
+
+        function getSportIcon(sport) {
+            const icons = {
+                'Cricket': '<i class="fas fa-baseball-ball"></i>',
+                'Football': '<i class="fas fa-futbol"></i>',
+                'Badminton': '<i class="fas fa-shuttlecock"></i>',
+                'Swimming': '<i class="fas fa-swimmer"></i>',
+                'Basketball': '<i class="fas fa-basketball-ball"></i>'
+            };
+            return icons[sport] || '<i class="fas fa-trophy"></i>';
+        }
+
+        function renderLeaderboard() {
+            const filter = document.getElementById('sportFilter').value;
+            const container = document.getElementById('leaderboardContent');
+            container.innerHTML = '';
+
+            const sportsList = filter === 'All' ? ['Cricket', 'Football', 'Badminton', 'Swimming', 'Basketball'] : [filter];
+
+            sportsList.forEach(sport => {
+                const data = window.arenaData.leaderboard.filter(t => t.sport === sport).sort((a, b) => a.rank - b.rank);
+                if (data.length === 0) return;
+
+                const sportIconHTML = getSportIcon(sport);
+
+                let html = `
+                <div class="sport-section">
+                    <h2 class="sport-title">${sportIconHTML} <span>${sport}</span> Leaderboard</h2>
+                    <div class="podium-wrapper">
+                `;
+
+                // Render Top 3 Podium
+                const p1 = data.find(d => d.rank === 1);
+                const p2 = data.find(d => d.rank === 2);
+                const p3 = data.find(d => d.rank === 3);
+
+                const renderPodium = (team, rankId, medalClass, iconHTML) => {
+                    if (!team) return `<div style="flex:1;"></div>`;
+                    const medalText = rankId === 1 ? '🥇' : rankId === 2 ? '🥈' : '🥉';
+                    return `
+                    <div class="podium-card p-rank-${rankId}" onclick="showTeamModal('${team.teamName}')">
+                        <div class="medal-badge medal-${rankId}">${medalText}</div>
+                        <div class="t-icon">${iconHTML}</div>
+                        <div class="t-name">${team.teamName}</div>
+                        <div class="t-zone"><i class="fas fa-map-marker-alt"></i> ${team.matchZone}</div>
+                        <div class="t-stats-flex">
+                            <div class="t-stat"><strong>${team.played}</strong>Played</div>
+                            <div class="t-stat"><strong>${team.won}</strong>Wins</div>
+                            <div class="t-stat"><strong>${team.points}</strong>Pts</div>
+                        </div>
+                    </div>`;
+                };
+
+                html += renderPodium(p2, 2, 'medal-2', sportIconHTML);
+                html += renderPodium(p1, 1, 'medal-1', sportIconHTML);
+                html += renderPodium(p3, 3, 'medal-3', sportIconHTML);
+
+                html += `</div>`;
+
+                // Render List 4-8
+                const list = data.filter(d => d.rank > 3 && d.rank <= 8);
+                if (list.length > 0) {
+                    html += `<div class="list-wrapper">`;
+                    list.forEach(team => {
+                        html += `
+                        <div class="list-row" onclick="showTeamModal('${team.teamName}')">
+                            <div class="r-info-group">
+                                <div class="r-num">#${team.rank}</div>
+                                <div class="r-icon">${sportIconHTML}</div>
+                                <div class="r-name-col">
+                                    <div class="r-name">${team.teamName}</div>
+                                    <div class="r-loc"><i class="fas fa-map-marker-alt" style="color:var(--primary)"></i> ${team.matchZone}</div>
+                                </div>
+                            </div>
+                            <div class="r-stats-group">
+                                <div class="r-stat-box"><strong>${team.played}</strong><span>Played</span></div>
+                                <div class="r-stat-box"><strong>${team.won}</strong><span>Won</span></div>
+                                <div class="r-stat-box pt-highlight"><strong>${team.points}</strong><span>Points</span></div>
+                            </div>
+                        </div>`;
+                    });
+                    html += `</div>`;
+                }
+                html += `</div>`;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function showTeamModal(teamName) {
+            const team = window.arenaData.leaderboard.find(t => t.teamName === teamName);
+            if (!team) return;
+
+            document.getElementById('modalSportIcon').innerHTML = getSportIcon(team.sport);
+            document.getElementById('modalTeamName').innerHTML = `${team.teamName} ${team.rank === 1 ? '<i class="fas fa-crown" style="color:#f1c40f;font-size:1.5rem;margin-left:10px;" title="Champion"></i>' : ''}`;
+            document.getElementById('modalSportZone').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${team.sport} • ${team.matchZone} • Rank #${team.rank}`;
+
+            const played = team.played || 0;
+            const won = team.won || 0;
+            const lost = played - won;
+            const pct = played ? Math.round((won / played) * 100) : 0;
+
+            document.getElementById('m-played').innerText = played;
+            document.getElementById('m-won').innerText = won;
+            document.getElementById('m-lost').innerText = lost >= 0 ? lost : 0;
+            document.getElementById('m-winpct').innerText = `${pct}%`;
+            document.getElementById('m-points').innerText = team.points || 0;
+
+            // Generate Match History based on Dummy Data attributes
+            let histHtml = '';
+
+            // Match 1 (Using embedded score data)
+            const isWin = team.score && (team.score.toLowerCase().includes('won') || team.score.toLowerCase().includes('1st'));
+            histHtml += `
+            <div class="match-row ${isWin ? 'win' : 'loss'}">
+                <div>
+                    <div class="m-rival">vs ${team.against || 'Unknown Team'}</div>
+                    <div class="m-date"><i class="far fa-calendar-alt"></i> 12 Mar 2026</div>
+                </div>
+                <div class="m-result-box">
+                    <div class="m-res-tag">${isWin ? 'Victory' : 'Defeat'}</div>
+                    <div class="m-score">${team.score || 'Match Ended'}</div>
+                </div>
+            </div>`;
+
+            // Match 2 (Simulated past match)
+            const randWin = Math.random() > 0.4;
+            histHtml += `
+            <div class="match-row ${randWin ? 'win' : 'loss'}">
+                <div>
+                    <div class="m-rival">vs Regional Challengers</div>
+                    <div class="m-date"><i class="far fa-calendar-alt"></i> 05 Mar 2026</div>
+                </div>
+                <div class="m-result-box">
+                    <div class="m-res-tag">${randWin ? 'Victory' : 'Defeat'}</div>
+                    <div class="m-score">${randWin ? 'Commanding Lead' : 'Close Game'}</div>
+                </div>
+            </div>`;
+
+            document.getElementById('modalMatchHistory').innerHTML = histHtml;
+
+            // Gallery
+            const galleryCont = document.getElementById('galleryContainer');
+            if (team.photos && team.photos.length > 0) {
+                galleryCont.style.display = 'block';
+                document.getElementById('modalPhotos').innerHTML = team.photos.map(p => `
+                    <img src="${p}" onclick="openPreview('${p}')" alt="Team Photo">
+                `).join('');
+            } else {
+                galleryCont.style.display = 'none';
+            }
+
+            document.getElementById('teamDetailsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // prevent bg scroll
+        }
+
+        function closeTeamModal() {
+            document.getElementById('teamDetailsModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // restore bg scroll
+        }
+
+        function openPreview(src) {
+            document.getElementById('previewImage').src = src;
+            document.getElementById('imgPreview').style.display = 'flex';
+        }
+
+        // Close mapping on outside click
+        window.onclick = function (e) {
+            const m = document.getElementById('teamDetailsModal');
+            if (e.target === m) closeTeamModal();
+        }
+    </script>
+</body>
+
+</html>
