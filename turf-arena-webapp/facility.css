@@ -110,8 +110,4 @@
     border-radius: var(--radius);
 }
 
-@media (max-width: 992px) {
-    .facility-header {
-        grid-template-columns: 1fr;
-    }
-}
+/* Responsive disabled - Desktop view forced */

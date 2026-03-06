@@ -1,6 +1,5 @@
 .navbar {
     height: auto;
-    /* Allow height to adapt if absolutely necessary, though we aim for single line */
     min-height: 80px;
     background: var(--secondary);
     display: flex;
@@ -10,7 +9,7 @@
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 10px 0;
-    /* Add some padding so if it ever does flex, it won't hit top of screen */
+    min-width: 1200px;
 }
 
 .nav-container {
@@ -19,7 +18,6 @@
     align-items: center;
     width: 100%;
     max-width: 1600px !important;
-    /* Override standard 1200px container to use more left/right screen space effectively */
     padding: 0 30px !important;
     margin: 0 auto;
 }
@@ -34,25 +32,16 @@
     gap: 10px;
     white-space: nowrap;
     margin-right: auto;
-    /* Push the menu to the right instead of fixed margin */
 }
 
 .nav-menu {
     display: flex;
-    gap: 4px;
-    /* Tightened gap further */
+    gap: 12px;
     align-items: center;
     list-style: none;
     flex-wrap: nowrap;
-    /* STRICTLY Force single line */
     justify-content: flex-end;
     margin: 0;
-}
-
-@media (max-width: 1400px) {
-    .nav-menu {
-        gap: 2px;
-    }
 }
 
 .nav-link {
@@ -64,10 +53,8 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: clamp(0.7rem, 0.85vw, 0.9rem);
-    /* Scale down a bit more */
-    padding: 6px 10px;
-    /* More compact padding */
+    font-size: 0.9rem;
+    padding: 8px 15px;
     border-radius: 50px;
 }
 
@@ -93,31 +80,12 @@
     color: white;
     font-size: 0.6rem;
     font-weight: 800;
-    padding: 1px 6px;
+    padding: 2px 8px;
     border-radius: 20px;
     margin-left: 2px;
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
-    text-transform: uppercase;
-    animation: pulse-neon 2s infinite;
-}
-
-@keyframes pulse-neon {
-    0% {
-        box-shadow: 0 0 2px #ff4b2b;
-        transform: scale(1);
-    }
-
-    50% {
-        box-shadow: 0 0 10px #ff4b2b;
-        transform: scale(1.05);
-    }
-
-    100% {
-        box-shadow: 0 0 2px #ff4b2b;
-        transform: scale(1);
-    }
 }
 
 .profile-icon {
@@ -135,7 +103,7 @@
 
 .profile-dropdown {
     position: absolute;
-    top: 50px;
+    top: 55px;
     right: 0;
     background: white;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -152,38 +120,9 @@
 
 .user-info-header {
     padding: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
     background: var(--light-gray);
     text-align: center;
-}
-
-.user-avatar-small {
-    width: 50px;
-    height: 50px;
-    background: var(--primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-.user-name-label {
-    font-weight: 600;
-    color: var(--accent);
-    font-size: 0.9rem;
-    margin-bottom: 2px;
-}
-
-.user-email-label {
-    font-size: 0.75rem;
-    color: var(--gray);
+    border-bottom: 1px solid var(--border);
 }
 
 .profile-dropdown a {
@@ -191,23 +130,7 @@
     padding: 12px 20px;
     text-decoration: none;
     color: var(--accent);
-    transition: var(--transition);
     font-size: 0.9rem;
-}
-
-.profile-dropdown a i {
-    margin-right: 10px;
-    width: 15px;
-    text-align: center;
-    color: var(--gray);
-}
-
-.logout-link {
-    color: #ff4757 !important;
-}
-
-.logout-link:hover {
-    background: #fff5f5 !important;
 }
 
 .profile-dropdown a:hover {
@@ -216,340 +139,13 @@
 }
 
 .menu-toggle {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+    display: none !important;
 }
 
 .profile-menu {
-    display: none;
-    /* Changed from flex to hide by default */
+    display: flex;
     align-items: center;
     gap: 15px;
-    margin-left: 10px;
-}
-
-/* Auth state classes for flicker prevention */
-.auth-logged-in #profileMenu {
-    display: flex !important;
-}
-
-.auth-logged-in #loginItem {
-    display: none !important;
-}
-
-.auth-logged-out #profileMenu {
-    display: none !important;
-}
-
-.auth-logged-out #loginItem {
-    display: block !important;
-}
-
-.menu-notif-badge {
-    background: #ff4757;
-    color: white;
-    border-radius: 50%;
-    font-size: 9px;
-    padding: 2px 4px;
-    position: absolute;
-    top: -5px;
-    right: -8px;
-    /* Keep it inside the box to avoid clipping */
-    min-width: 14px;
-    height: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-}
-
-/* Find Opponent Menu Clash Animation */
-.nav-clash-link {
-    position: relative;
-    z-index: 10;
-    overflow: visible;
-}
-
-.nav-clash-link::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50px;
-    background: linear-gradient(90deg, #ff8c00, #ff4d4d, #ffd700);
-    z-index: -1;
-    opacity: 0;
-    filter: blur(8px);
-    transition: opacity 0.3s;
-}
-
-.nav-clash-link:hover::after {
-    opacity: 0.6;
-}
-
-.clash-icon-mini {
-    display: inline-block;
-    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    animation: boxingHit 4s infinite ease-in-out;
-    filter: drop-shadow(0 0 2px rgba(255, 165, 0, 0.5));
-}
-
-.nav-clash-link:hover .clash-icon-mini {
-    color: #FFA500;
-    transform: scale(1.2) rotate(15deg);
-}
-
-.nav-clash-sparks {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    transform: translateY(-50%);
-}
-
-.nav-clash-sparks span {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #FFD700;
-    border-radius: 50%;
-    opacity: 0;
-    box-shadow: 0 0 8px #FFD700;
-}
-
-/* Synced Sparks (The Burst) */
-.nav-clash-sparks span:nth-child(1) {
-    --tx: 25px;
-    --ty: -20px;
-    animation: sparkBurst 4s infinite 3.5s;
-}
-
-.nav-clash-sparks span:nth-child(2) {
-    --tx: -20px;
-    --ty: -15px;
-    animation: sparkBurst 4s infinite 3.6s;
-}
-
-.nav-clash-sparks span:nth-child(3) {
-    --tx: 15px;
-    --ty: 20px;
-    animation: sparkBurst 4s infinite 3.7s;
-}
-
-/* Continuous Sparks (Always active) */
-.nav-clash-sparks span:nth-child(4) {
-    --tx: 12px;
-    --ty: -12px;
-    animation: sparkContinuous 2.5s infinite;
-}
-
-.nav-clash-sparks span:nth-child(5) {
-    --tx: -15px;
-    --ty: 10px;
-    animation: sparkContinuous 3.2s infinite 0.5s;
-}
-
-.nav-clash-sparks span:nth-child(6) {
-    --tx: 8px;
-    --ty: 18px;
-    animation: sparkContinuous 2.8s infinite 1.2s;
-}
-
-@keyframes boxingHit {
-
-    0%,
-    85%,
-    100% {
-        transform: rotate(0) scale(1) translateX(0);
-    }
-
-    87% {
-        transform: rotate(-25deg) scale(1.3) translateX(-5px);
-        color: #ff4d4d;
-    }
-
-    90% {
-        transform: rotate(35deg) scale(1.6) translateX(8px);
-        color: #ffd700;
-        text-shadow: 0 0 10px #ffd700, 0 0 20px #ff8c00;
-    }
-
-    93% {
-        transform: rotate(-10deg) scale(1.2) translateX(2px);
-    }
-
-    96% {
-        transform: rotate(5deg) scale(1.1);
-    }
-}
-
-@keyframes sparkBurst {
-
-    0%,
-    88% {
-        transform: scale(0) translate(0, 0);
-        opacity: 0;
-    }
-
-    90% {
-        opacity: 1;
-        transform: scale(2) translate(var(--tx), var(--ty));
-    }
-
-    95%,
-    100% {
-        opacity: 0;
-        transform: scale(0) translate(calc(var(--tx) * 2), calc(var(--ty) * 2));
-    }
-}
-
-@keyframes sparkContinuous {
-    0% {
-        transform: scale(0) translate(0, 0);
-        opacity: 0;
-    }
-
-    20% {
-        opacity: 1;
-        transform: scale(1.2) translate(var(--tx), var(--ty));
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0) translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5));
-    }
-}
-
-
-@keyframes badgePulse {
-    /* Kept for reference but removed from badge */
-}
-
-.nav-link {
-    position: relative;
-    /* For absolute badge positioning */
-    text-decoration: none;
-    color: var(--accent);
-    font-weight: 500;
-    transition: var(--transition);
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.universal-notif {
-    font-size: 1.2rem;
-    color: var(--accent);
-    cursor: pointer;
-    position: relative;
-    padding: 5px;
-    transition: var(--transition);
-    display: none;
-    /* Hidden by default, shown via JS after login */
-}
-
-.universal-badge {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 10px;
-    height: 10px;
-    background: #ff4757;
-    border: 2px solid white;
-    border-radius: 50%;
-}
-
-@media (max-width: 992px) {
-    .menu-toggle {
-        display: block;
-        color: var(--accent);
-    }
-
-    .nav-menu {
-        position: fixed;
-        top: 80px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 80px);
-        background: white;
-        flex-direction: column;
-        padding: 20px 0;
-        /* Changed from 40px padding to full-bleed */
-        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-        gap: 0;
-        /* Use individual item padding */
-        align-items: stretch;
-        /* Full width items */
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-menu li {
-        width: 100%;
-        border-bottom: 1px solid #f2f2f2;
-    }
-
-    .nav-menu li:last-child {
-        border-bottom: none;
-    }
-
-    .nav-link {
-        width: 100%;
-        padding: 18px 30px !important;
-        font-size: 1.1rem !important;
-        border-radius: 0 !important;
-        justify-content: flex-start !important;
-        gap: 15px !important;
-    }
-
-    .nav-link.active {
-        background: rgba(44, 83, 100, 0.05) !important;
-        color: var(--primary) !important;
-        box-shadow: none !important;
-        border-left: 5px solid var(--primary);
-    }
-
-    .nav-link.active i,
-    .nav-link.active span {
-        color: var(--primary) !important;
-    }
-
-    .nav-badge {
-        position: relative;
-        top: 0;
-        margin-left: auto;
-        /* Push to right */
-    }
-
-    .menu-notif-badge {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-left: auto;
-    }
-
-    /* Bottom Profile Section */
-    .profile-menu {
-        margin-top: 20px;
-        padding: 20px 30px;
-        background: #fdfdfd;
-        border-top: 2px solid #eee;
-        justify-content: space-around !important;
-        width: 100%;
-    }
-
-    .universal-notif {
-        display: flex !important;
-        font-size: 1.5rem;
-    }
 }
 
 /* Dropdown Menu Styles */
@@ -563,24 +159,11 @@
     position: relative;
 }
 
-/* If the link inside the trigger group is active, the whole group should look cohesive */
-.nav-item-dropdown:has(.nav-link.active) .dropdown-arrow {
-    color: white;
-}
-
 .dropdown-arrow {
     font-size: 0.7rem;
-    position: absolute;
-    right: 8px;
-    pointer-events: none;
-    /* Let clicks pass to the link if they overlap */
-    transition: transform 0.3s;
+    margin-left: 5px;
     color: var(--gray);
-}
-
-/* Adjust padding for links that have arrows to avoid overlap */
-.nav-item-dropdown .nav-link {
-    padding-right: 28px;
+    transition: transform 0.3s;
 }
 
 .nav-item-dropdown.show .dropdown-arrow {
@@ -596,88 +179,27 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     padding: 10px 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(15px);
-    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    display: none;
     z-index: 1001;
     list-style: none;
-    margin-top: 5px;
+    margin-top: 10px;
+    border: 1px solid var(--border);
 }
 
 .nav-item-dropdown.show .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    display: block;
 }
 
 .dropdown-item {
-    padding: 12px 20px;
+    padding: 10px 20px;
     display: block;
     color: var(--accent);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    transition: all 0.2s;
 }
 
 .dropdown-item:hover {
-    background: rgba(44, 83, 100, 0.05);
-    color: #2c5364;
+    background: var(--light-gray);
     padding-left: 25px;
-}
-
-@media (max-width: 992px) {
-    .nav-item-dropdown {
-        width: 100%;
-    }
-
-    .dropdown-trigger-group {
-        justify-content: space-between;
-        width: 100%;
-        position: relative;
-    }
-
-    .dropdown-arrow {
-        right: 0 !important;
-        position: absolute;
-        width: 60px;
-        /* Large hit area */
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 5;
-        border-left: 1px solid #eee;
-        background: rgba(0, 0, 0, 0.02);
-        color: var(--primary) !important;
-        pointer-events: auto !important;
-        /* Critical: make it clickable */
-    }
-
-    .dropdown-menu {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        box-shadow: none;
-        padding-left: 0;
-        padding-top: 0;
-        min-width: 100%;
-        display: none;
-        background: #f9f9f9;
-        border-radius: 0;
-        border: none;
-    }
-
-    .dropdown-item {
-        padding: 15px 60px;
-        /* Indent dropdown items */
-        border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-    }
-
-    .nav-item-dropdown.show .dropdown-menu {
-        display: block;
-    }
 }

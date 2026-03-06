@@ -461,39 +461,4 @@
     background: #fafafa;
 }
 
-@media (max-width: 768px) {
-    .clash-icon {
-        animation-duration: 6s;
-        /* Slower, less intense */
-    }
-
-    .spark-fx {
-        animation: none;
-        display: none;
-        /* Hide sparks on mobile to save performance */
-    }
-
-    .filter-section {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 15px;
-        position: static;
-        padding: 20px;
-    }
-
-    .find-opponent-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .challenge-badge {
-        font-size: 0.65rem;
-        padding: 4px 10px;
-    }
-
-    .challenges-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
+/* Responsive disabled - Desktop view forced */

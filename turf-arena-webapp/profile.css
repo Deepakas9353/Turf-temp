@@ -327,43 +327,4 @@ input:checked+.slider:before {
 }
 
 /* Responsive Dashboard */
-@media (max-width: 992px) {
-    .profile-dashboard {
-        flex-direction: column;
-    }
-
-    .profile-sidebar {
-        width: 100%;
-        position: static;
-    }
-
-    .sidebar-menu {
-        display: flex;
-        overflow-x: auto;
-        padding: 0 20px;
-    }
-
-    .sidebar-menu-item {
-        padding: 15px 20px;
-        white-space: nowrap;
-    }
-
-    .sidebar-menu-item.active::after {
-        height: 3px;
-        width: 100%;
-        top: auto;
-        bottom: 0;
-    }
-}
-
-@media (max-width: 576px) {
-    .wallet-banner {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
-}
+/* Responsive disabled - Desktop view forced */
