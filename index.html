@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turf Arena | Premium Sports Facilities</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -237,7 +237,37 @@
                     </div>
                     <div class="universal-notif" id="universalBell" style="display: none;">
                         <i class="fas fa-bell"></i>
-                        <div class="universal-badge" id="universalDot" style="display: none;"></div>
+                        <div class="universal-badge" id="universalDot" style="display: block;">3</div>
+                        <div class="notif-dropdown">
+                            <div class="notif-header">Notifications (3 new)</div>
+                            <div class="notif-list">
+                                <div class="notif-item">
+                                    <i class="fas fa-check-circle" style="color: #2ecc71;"></i>
+                                    <div class="notif-content">
+                                        <p>Booking Successful</p>
+                                        <small>Your turf booking for Green Field Arena is confirmed for
+                                            tomorrow.</small>
+                                    </div>
+                                </div>
+                                <div class="notif-item">
+                                    <i class="fas fa-key" style="color: #f1c40f;"></i>
+                                    <div class="notif-content">
+                                        <p>OTP Verification</p>
+                                        <small>145892 is your Turf Arena verification code. Do not share it.</small>
+                                    </div>
+                                </div>
+                                <div class="notif-item">
+                                    <i class="fas fa-bolt" style="color: #e74c3c;"></i>
+                                    <div class="notif-content">
+                                        <p>Match Challenge!</p>
+                                        <small>Thunder Strikers challenged you for a Cricket match on 15 March.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notif-footer"><a href="profile.html"
+                                    onclick="sessionStorage.setItem('activeProfileTab', 'notifications')">View All
+                                    Notifications</a></div>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -544,7 +574,6 @@
 
     <script src="dummy-data.js"></script>
     <script src="navbar.js"></script>
-    <script src="router.js"></script>
     <script src="login.js"></script>
     <script src="ui.js"></script>
     <script src="facility.js"></script>
@@ -552,4 +581,3 @@
 
 
 </html>
-

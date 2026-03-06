@@ -7,7 +7,6 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
-    min-width: 1200px;
 }
 
 .page-hero-content {

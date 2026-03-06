@@ -1,4 +1,365 @@
-/* Responsive design disabled - Desktop view forced */
-body {
-    min-width: 1200px;
+/* 
+ * RESPONSIVE BREAKPOINTS
+ * Desktop: above 1200px
+ * Tablet: 768px – 1199px
+ * Mobile: below 768px
+ */
+
+/* =========================================================================
+   TABLET & MOBILE (Max-Width: 1199px)
+   ========================================================================= */
+@media (max-width: 1199px) {
+
+    /* Adjust Container Padding */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Navbar - Adjust limits */
+    .nav-container {
+        padding: 0 15px !important;
+    }
+
+    /* Facility Strip */
+    .facility-strip {
+        padding: 10px 15px;
+    }
+
+    /* Hero Section */
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    /* Sections */
+    section {
+        padding: 60px 0;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    /* 3. Card Grid Responsiveness (2 Cards Per Row for Tablet and Mobile) */
+    .grid-layout,
+    .feature-grid,
+    .amenity-grid,
+    .offer-grid,
+    .review-grid,
+    .turf-grid,
+    .opponent-grid,
+    .facility-grid,
+    .slot-grid,
+    .slots-container,
+    .opportunities-grid,
+    .find-opponent-grid,
+    .challenges-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    .challenge-card {
+        min-width: 0 !important;
+    }
+
+    .podium-card {
+        padding: 20px 10px !important;
+    }
+}
+
+/* =========================================================================
+   MOBILE (Max-Width: 767px)
+   ========================================================================= */
+@media (max-width: 767px) {
+
+    /* 1. Global Updates */
+    body {
+        font-size: 14px;
+        overflow-x: hidden;
+    }
+
+    section {
+        padding: 40px 0;
+    }
+
+    /* 2. Mobile Navigation Menu */
+    .menu-toggle {
+        display: block !important;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--primary);
+        z-index: 1002;
+    }
+
+    /* The Navigation Menu itself */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 260px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-top: 80px;
+        padding-left: 20px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-link {
+        margin: 10px 0 !important;
+        font-size: 1.1rem !important;
+        width: 100%;
+        display: block;
+    }
+
+    /* Desktop profile icons kept in header */
+    #profileMenu {
+        display: flex !important;
+        position: fixed !important;
+        right: 70px !important;
+        /* Spacing for hamburger */
+        top: 20px !important;
+        z-index: 1002 !important;
+    }
+
+    #loginItem {
+        display: flex !important;
+        position: fixed !important;
+        right: 70px !important;
+        top: 20px !important;
+        z-index: 1002 !important;
+    }
+
+    .nav-container {
+        justify-content: space-between;
+    }
+
+    /* Dropdowns in menu */
+    .dropdown-menu {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        display: none;
+        padding: 0 0 0 15px !important;
+        background: #f9f9f9 !important;
+        border-radius: 0 !important;
+    }
+
+    .nav-item-dropdown.show .dropdown-menu {
+        display: block !important;
+    }
+
+    /* 3. Page Headers */
+    .page-hero {
+        padding: 40px 20px !important;
+        text-align: center;
+    }
+
+    .page-hero-content {
+        flex-direction: column !important;
+        gap: 15px;
+    }
+
+    .page-hero-title {
+        font-size: 1.6rem !important;
+        justify-content: center;
+    }
+
+    .page-hero-subtitle {
+        border-left: none !important;
+        padding-left: 0 !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* 4. Find Opponent Filters */
+    .filter-section {
+        grid-template-columns: 1fr !important;
+        position: relative !important;
+        top: 0 !important;
+        padding: 20px !important;
+        gap: 15px !important;
+    }
+
+    .tabs-container {
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+    }
+
+    .tab-btn {
+        padding: 8px 12px !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* 5. Leaderboard */
+    #leaderboardContent {
+        grid-template-columns: 1fr !important;
+        padding: 0 15px !important;
+    }
+
+    .podium-wrapper {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 40px !important;
+        min-height: auto !important;
+    }
+
+    .podium-card {
+        width: 100% !important;
+        max-width: 320px !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding-top: 50px !important;
+    }
+
+    .p-rank-1 {
+        order: -1;
+        /* Keep rank 1 at top */
+    }
+
+    .p-rank-2,
+    .p-rank-3 {
+        height: auto !important;
+    }
+
+    .list-row {
+        flex-direction: column !important;
+        text-align: center;
+        gap: 15px;
+        padding: 20px !important;
+    }
+
+    .r-info-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .r-num {
+        width: auto !important;
+    }
+
+    .r-stats-group {
+        gap: 20px !important;
+        width: 100%;
+        justify-content: center !important;
+    }
+
+    /* 6. Profile Dashboard */
+    .profile-dashboard {
+        flex-direction: column !important;
+        padding-top: 40px !important;
+    }
+
+    .profile-sidebar {
+        width: 100% !important;
+        position: relative !important;
+        top: 0 !important;
+        margin-bottom: 30px;
+    }
+
+    .profile-content {
+        width: 100% !important;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .wallet-banner {
+        flex-direction: column !important;
+        text-align: center;
+        gap: 20px;
+        padding: 30px 20px !important;
+    }
+
+    .wallet-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* 7. Booking & Facility Details */
+    .facility-header {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .gallery-main {
+        height: 250px !important;
+    }
+
+    .gallery-thumbs {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    .custom-slot-box div[style*="display: flex"] {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    /* 8. Modals (Universal) */
+    .modal-content,
+    .lb-modal-content {
+        width: 95% !important;
+        padding: 20px !important;
+        margin: 10px !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
+
+    .lb-modal-content {
+        max-width: 95% !important;
+    }
+
+    .m-header {
+        flex-direction: column !important;
+        text-align: center;
+        gap: 15px !important;
+    }
+
+    .stat-cards-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .match-row {
+        flex-direction: column !important;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .m-result-box {
+        justify-content: center !important;
+        width: 100%;
+    }
+
+    /* 9. Footer */
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+        gap: 30px !important;
+    }
+
+    .footer-col h3 {
+        justify-content: center;
+    }
+
+    /* 10. Buttons - Touch friendly height */
+    .btn,
+    button,
+    .nav-link,
+    select,
+    input {
+        min-height: 44px;
+    }
 }
