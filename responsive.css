@@ -1,0 +1,4 @@
+/* Responsive design disabled - Desktop view forced */
+body {
+    min-width: 1200px;
+}

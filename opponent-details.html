@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200">
+    <title>Challenge Details | Turf Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        .details-container {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .status-box {
+            background: var(--light-gray);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .status-tag {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: white;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .details-container {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+        }
+    </style>
+    <!-- Blocking script to prevent login flicker -->
+    <script>
+        (function () {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            document.documentElement.classList.add(isLoggedIn ? 'auth-logged-in' : 'auth-logged-out');
+        })();
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-medal"></i> Turf Arena
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="our-turfs.html" class="nav-link">Book Turf</a></li>
+                <li><a href="facilities.html" class="nav-link">Our Facilities</a></li>
+                <li>
+                    <a href="find-opponent.html" class="nav-link nav-clash-link">
+                        <span class="clash-icon-mini">⚔</span> Find Opponent
+                        <div class="nav-clash-sparks">
+                            <span></span><span></span><span></span>
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span id="headerNotifBadge" class="menu-notif-badge" style="display: none;">0</span>
+                    </a>
+                </li>
+                <li><a href="gallery.html" class="nav-link"><i class="fas fa-camera"></i> Gallery</a></li>
+                <li><a href="my-bookings.html" class="nav-link">My Bookings</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li id="loginItem"><a href="#" class="btn btn-primary" id="loginLink">Demo Login</a></li>
+                <li id="profileMenu" class="profile-menu" style="display: none;">
+                    <div class="profile-icon"><i class="fas fa-user"></i>
+                        <div class="profile-dropdown">
+                            <div class="user-info-header">
+                                <div class="user-avatar-small">JD</div>
+                                <div class="user-name-label">John Doe</div>
+                                <div class="user-email-label">john.doe@example.com</div>
+                            </div>
+                            <a href="profile.html"><i class="fas fa-id-card"></i> My Profile</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'wallet')"><i
+                                    class="fas fa-wallet"></i> My Wallet</a>
+                            <a href="my-bookings.html"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                            <a href="profile.html"
+                                onclick="sessionStorage.setItem('activeProfileTab', 'notifications')"><i
+                                    class="fas fa-bell"></i> Notifications</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'security')"><i
+                                    class="fas fa-cog"></i> Account Settings</a>
+                            <div style="border-top: 1px solid var(--border); margin-top: 5px;">
+                                <a href="#" id="logoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i>
+                                    Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="universal-notif" id="universalBell" style="display: none;">
+                        <i class="fas fa-bell"></i>
+                        <div class="universal-badge" id="universalDot" style="display: none;"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="details-container">
+            <div id="teamInfoGraphic"
+                style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--accent); color: white; border-radius: 20px; min-height: 300px;">
+                <i class="fas fa-users" style="font-size: 5rem; margin-bottom: 20px;"></i>
+                <h1 id="detTeamName">Team Name</h1>
+                <p id="detSport">Sport Type</p>
+            </div>
+
+            <div class="info-content">
+                <h2 style="margin-bottom: 20px;">Challenge Information</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <p style="color: var(--gray);">Players Count</p>
+                        <h3 id="detPlayers">--</h3>
+                    </div>
+                    <div>
+                        <p style="color: var(--gray);">Sport Type</p>
+                        <h3 id="detSportType">--</h3>
+                    </div>
+                    <div>
+                        <p style="color: var(--gray);">Match Time</p>
+                        <h3 id="detTime">--</h3>
+                    </div>
+                    <div>
+                        <p style="color: var(--gray);">Turf Location</p>
+                        <h3 id="detLocation">--</h3>
+                    </div>
+                </div>
+
+                <div class="status-box">
+                    <div class="status-tag">⚔ status: Looking for opponent</div>
+                    <p style="font-size: 0.9rem; color: var(--gray);">This team is waiting for a challenger. Send a
+                        request now to secure the match!</p>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 25px;"
+                        onclick="window.location.href='find-opponent.html'">Back to Opponents</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" style="margin-top: 100px;">
+        <div class="container footer-grid">
+            <div class="footer-col" style="text-align: center;">
+                <h3 style="color: white;"><i class="fas fa-medal"></i> Turf Arena</h3>
+                <p>Excellence in sports management since 2018.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Turf Arena Management. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="dummy-data.js"></script>
+    <script src="navbar.js"></script>
+    <script src="login.js"></script>
+    <script src="ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const ch = window.arenaData.challenges.find(c => c.id === id);
+
+            if (ch) {
+                document.getElementById('detTeamName').innerText = ch.teamName;
+                document.getElementById('detSport').innerText = ch.sport;
+                document.getElementById('detPlayers').innerText = ch.players;
+                document.getElementById('detSportType').innerText = ch.sport;
+                document.getElementById('detTime').innerText = ch.time;
+                document.getElementById('detLocation').innerText = ch.location;
+            }
+        });
+    </script>
+</body>
+
+</html>

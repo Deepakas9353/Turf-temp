@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200">
+    <title>Find Opponent | Turf Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="page-header.css">
+    <link rel="stylesheet" href="find-opponent.css">
+    <link rel="stylesheet" href="responsive.css">
+    <!-- Blocking script to prevent login flicker -->
+    <script>
+        (function () {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            document.documentElement.classList.add(isLoggedIn ? 'auth-logged-in' : 'auth-logged-out');
+        })();
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-medal"></i> Turf Arena
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="our-turfs.html" class="nav-link">Book Turf <span class="nav-badge">Offers</span></a></li>
+                <li class="nav-item-dropdown">
+                    <div class="dropdown-trigger-group">
+                        <a href="facilities.html" class="nav-link">Our Facilities</a>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="facilities.html#parking" class="dropdown-item">Parking Area</a></li>
+                        <li><a href="facilities.html#lights" class="dropdown-item">Flood Lights</a></li>
+                        <li><a href="facilities.html#rooms" class="dropdown-item">Changing Rooms</a></li>
+                        <li><a href="facilities.html#washrooms" class="dropdown-item">Washrooms</a></li>
+                        <li><a href="facilities.html#water" class="dropdown-item">Drinking Water</a></li>
+                        <li><a href="facilities.html#rental" class="dropdown-item">Equipment Rental</a></li>
+                        <li><a href="facilities.html#aid" class="dropdown-item">First Aid Support</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="find-opponent.html" class="nav-link active nav-clash-link">
+                        <span class="clash-icon-mini">⚔</span> Find Opponent
+                        <div class="nav-clash-sparks">
+                            <span></span><span></span><span></span>
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span id="headerNotifBadge" class="menu-notif-badge" style="display: none;">0</span>
+                    </a>
+                </li>
+                <li class="nav-item-dropdown" id="leaderboardNavItem">
+                    <div class="dropdown-trigger-group">
+                        <a href="leaderboard.html" class="nav-link"><i class="fas fa-trophy"
+                                style="color: #f1c40f;"></i> Leaderboard</a>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <!-- Dropdown for Leaderboard -->
+                    <div id="leaderboardDropdownMenu" class="dropdown-menu"
+                        style="padding: 15px; width: 320px; max-height: 450px; overflow-y: auto; right: -50px; left: auto;">
+                        <div
+                            style="font-weight: 700; color: var(--accent); margin-bottom: 15px; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                            <i class="fas fa-trophy" style="color: #f1c40f;"></i> Top Rankings
+                        </div>
+                        <div id="headerLeaderboardList" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Leaderboard list will be injected here -->
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="leaderboard.html" class="btn btn-primary"
+                                style="padding: 5px 15px; font-size: 0.8rem; width: 100%;">View Full Leaderboard</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="gallery.html" class="nav-link"><i class="fas fa-camera"></i> Gallery</a></li>
+                <li class="nav-item-dropdown">
+                    <div class="dropdown-trigger-group">
+                        <a href="nearby-facilities.html" class="nav-link">Nearby Facilities</a>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="nearby-facilities.html#cafe" class="dropdown-item">Cafe</a></li>
+                        <li><a href="nearby-facilities.html#shop" class="dropdown-item">Sports Shop</a></li>
+                        <li><a href="nearby-facilities.html#parking" class="dropdown-item">Parking Area</a></li>
+                        <li><a href="nearby-facilities.html#juice" class="dropdown-item">Juice Center</a></li>
+                        <li><a href="nearby-facilities.html#metro" class="dropdown-item">Metro Station</a></li>
+                        <li><a href="nearby-facilities.html#bus" class="dropdown-item">Bus Stop</a></li>
+                    </ul>
+                </li>
+                <li><a href="my-bookings.html" class="nav-link">My Bookings</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li id="loginItem"><a href="#" class="btn btn-primary" id="loginLink">Demo Login</a></li>
+                <li id="profileMenu" class="profile-menu" style="display: none;">
+                    <div class="profile-icon"><i class="fas fa-user"></i>
+                        <div class="profile-dropdown">
+                            <div class="user-info-header">
+                                <div class="user-avatar-small">JD</div>
+                                <div class="user-name-label">John Doe</div>
+                                <div class="user-email-label">john.doe@example.com</div>
+                            </div>
+                            <a href="profile.html"><i class="fas fa-id-card"></i> My Profile</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'wallet')"><i
+                                    class="fas fa-wallet"></i> My Wallet</a>
+                            <a href="my-bookings.html"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                            <a href="profile.html"
+                                onclick="sessionStorage.setItem('activeProfileTab', 'notifications')"><i
+                                    class="fas fa-bell"></i> Notifications</a>
+                            <a href="profile.html" onclick="sessionStorage.setItem('activeProfileTab', 'security')"><i
+                                    class="fas fa-cog"></i> Account Settings</a>
+                            <div style="border-top: 1px solid var(--border); margin-top: 5px;">
+                                <a href="#" id="logoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i>
+                                    Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="universal-notif" id="universalBell" style="display: none;">
+                        <i class="fas fa-bell"></i>
+                        <div class="universal-badge" id="universalDot" style="display: none;"></div>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <div class="page-hero-title-group">
+                <h1 class="page-hero-title"><span class="ph-icon">⚔️</span> Find Opponent</h1>
+                <p class="page-hero-subtitle">Challenge Other Teams at Turf Arena</p>
+            </div>
+            <div class="page-hero-filter hidden"></div>
+        </div>
+    </div>
+
+    <section class="container find-opponent-page">
+
+        <div class="filter-section">
+            <div class="filter-group">
+                <label>Sport</label>
+                <select id="sportFilter" class="form-control">
+                    <option value="All">All</option>
+                    <option value="Cricket">Cricket</option>
+                    <option value="Football">Football</option>
+                    <option value="Badminton">Badminton</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Date</label>
+                <input type="date" id="dateFilter" class="form-control">
+            </div>
+            <div class="filter-group">
+                <label>Players</label>
+                <input type="number" id="playerFilter" class="form-control" style="width: 80px;">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="applyFilters()">Apply</button>
+                <button class="btn btn-outline" onclick="openCreateModal()"
+                    style="border-color: var(--primary); color: var(--primary);">
+                    <i class="fas fa-plus"></i> Post New
+                </button>
+            </div>
+        </div>
+
+        <!-- Create Activity Modal -->
+        <div id="createModal" class="modal"
+            style="display: none; position: fixed; z-index: 4500; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+            <div class="modal-content"
+                style="background: white; padding: 30px; border-radius: 24px; max-width: 600px; width: 92%; position: relative;">
+                <h2 style="margin-bottom: 25px; color: var(--accent); display: flex; align-items: center; gap: 12px;">
+                    <i class="fas fa-bullhorn" style="color: var(--primary);"></i> Post New Activity
+                </h2>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px;">Activity Type</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div id="typeChallenge" class="type-option active" onclick="setPostType('challenge')"
+                            style="border: 2px solid var(--primary); padding: 15px; border-radius: 12px; cursor: pointer; text-align: center; transition: 0.3s;">
+                            <i class="fas fa-swords" style="display: block; font-size: 1.5rem; margin-bottom: 5px;"></i>
+                            <b>Team Challenge</b>
+                        </div>
+                        <div id="typeRecruit" class="type-option" onclick="setPostType('recruit')"
+                            style="border: 2px solid #eee; padding: 15px; border-radius: 12px; cursor: pointer; text-align: center; transition: 0.3s;">
+                            <i class="fas fa-user-plus"
+                                style="display: block; font-size: 1.5rem; margin-bottom: 5px;"></i>
+                            <b>Recruit Players</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="createForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>Team Name</label>
+                        <input type="text" id="postTeamName" class="form-control" placeholder="Your Team">
+                    </div>
+                    <div class="form-group">
+                        <label>Sport</label>
+                        <select id="postSport" class="form-control">
+                            <option value="Cricket">Cricket</option>
+                            <option value="Football">Football</option>
+                            <option value="Badminton">Badminton</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label id="numLabel">Total Players</label>
+                        <input type="number" id="postNum" class="form-control" value="11">
+                    </div>
+                    <div id="recruitExtra" class="form-group" style="display: none;">
+                        <label>Players Needed</label>
+                        <input type="number" id="postNeeded" class="form-control" value="2">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="postDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Time Slot</label>
+                        <select id="postTime" class="form-control">
+                            <option>06:00 AM - 07:00 AM</option>
+                            <option>05:00 PM - 06:00 PM</option>
+                            <option>07:00 PM - 08:00 PM</option>
+                            <option>08:00 PM - 10:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2; display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="postAllowJoin" checked style="width: 20px; height: 20px;">
+                        <label style="margin: 0; cursor: pointer;" for="postAllowJoin">Enable joining requests from
+                            others</label>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button class="btn btn-outline" onclick="closeCreateModal()" style="flex: 1;">Cancel</button>
+                    <button class="btn btn-primary" onclick="submitPost()" style="flex: 1;">Publish Post</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab System -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('open')">Open Challenges</button>
+            <button class="tab-btn" onclick="switchTab('recruitment')">Team Recruitment</button>
+            <button class="tab-btn" onclick="switchTab('sent')">Sent Requests <span id="sentCount"
+                    class="tab-badge">0</span></button>
+            <button class="tab-btn" onclick="switchTab('received')">Received Requests <span id="receivedCount"
+                    class="tab-badge">0</span></button>
+            <button class="tab-btn" onclick="switchTab('history')">Challenge History</button>
+        </div>
+
+        <!-- Open Challenges View -->
+        <div id="openChallengesView">
+            <div class="challenges-grid" id="challengesGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- Team Recruitment View -->
+        <div id="recruitmentView" style="display: none;">
+            <div class="challenges-grid" id="recruitmentGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- Challenges Sent View -->
+        <div id="sentChallengesView" style="display: none;">
+            <div class="challenges-grid" id="sentChallengesGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- Challenges Received View -->
+        <div id="receivedChallengesView" style="display: none;">
+            <div class="challenges-grid" id="receivedChallengesGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- Challenge History View -->
+        <div id="historyChallengesView" style="display: none;">
+            <div class="challenges-grid" id="historyChallengesGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenge Confirmation Modal -->
+    <div id="challengeModal" class="modal"
+        style="display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; position: relative; text-align: center;">
+            <div id="challengeModalIcon" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <h2 id="challengeModalTitle">Wallet Reservation</h2>
+            <p id="challengeModalText" style="margin: 20px 0; color: var(--gray);"></p>
+            <div id="challengeModalActions"
+                style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                <!-- Buttons will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenge Review Modal (Accept/Reject) -->
+    <div id="reviewModal" class="modal"
+        style="display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+        <div class="modal-content"
+            style="background: white; padding: 0; border-radius: 24px; max-width: 550px; width: 92%; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+
+            <!-- Header -->
+            <div
+                style="background: #fdfdfd; padding: 20px 30px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                <h3
+                    style="margin: 0; font-size: 1.2rem; color: var(--accent); display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-shield-halved" style="color: var(--primary);"></i> Review Challenge
+                </h3>
+                <button onclick="closeReviewModal()"
+                    style="background: none; border: none; font-size: 1.4rem; color: #999; cursor: pointer; transition: 0.3s;"
+                    onmouseover="this.style.color='#ff4757'" onmouseout="this.style.color='#999'">&times;</button>
+            </div>
+
+            <div style="padding: 25px 30px;">
+                <!-- Team & Info Horizontal -->
+                <div
+                    style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px; background: #f9fafb; padding: 15px; border-radius: 16px;">
+                    <div id="revTeamIcon"
+                        style="width: 60px; height: 60px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h3 id="revTeamName" style="margin: 0; color: var(--accent); font-size: 1.1rem;">-</h3>
+                        <p id="revSport" style="margin: 3px 0 0; color: var(--gray); font-size: 0.85rem;">-</p>
+                    </div>
+                    <div style="margin-left: auto; text-align: right;">
+                        <span
+                            style="font-size: 0.7rem; color: #f39c12; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 2px;">Deadline</span>
+                        <span id="revTimer"
+                            style="font-family: monospace; font-weight: 800; color: #e67e22; font-size: 1rem;">--:--:--</span>
+                    </div>
+                </div>
+
+                <!-- Simple Details List -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div style="font-size: 0.9rem;">
+                        <span style="color: var(--gray); display: block; font-size: 0.75rem;">Date</span>
+                        <b id="revDate" style="color: var(--accent);">-</b>
+                    </div>
+                    <div style="font-size: 0.9rem;">
+                        <span style="color: var(--gray); display: block; font-size: 0.75rem;">Time</span>
+                        <b id="revTime" style="color: var(--accent);">-</b>
+                    </div>
+                    <div style="font-size: 0.9rem;">
+                        <span style="color: var(--gray); display: block; font-size: 0.75rem;">Location</span>
+                        <b id="revLocation" style="color: var(--accent);">-</b>
+                    </div>
+                    <div style="font-size: 0.9rem;">
+                        <span style="color: var(--gray); display: block; font-size: 0.75rem;">Match Policy</span>
+                        <b style="color: #2e7d32;">Split Payment</b>
+                    </div>
+                </div>
+
+                <!-- Remark -->
+                <div style="margin-bottom: 20px;">
+                    <textarea id="revRemark" placeholder="Add a remark for the opponent (optional)..."
+                        style="width: 100%; height: 75px; padding: 12px; border-radius: 12px; border: 1.5px solid #eee; resize: none; font-family: inherit; font-size: 0.9rem; outline: none; transition: 0.3s;"></textarea>
+                </div>
+
+                <!-- Action Group -->
+                <div id="revActions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <!-- Buttons dynamic -->
+                </div>
+
+                <p style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #95a5a6;">
+                    <i class="fas fa-info-circle"></i> Wallet will be debited only after acceptance.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Notifications Hub (Simplified Header Dropdown) -->
+    <div id="notifDropdown"
+        style="display: none; position: fixed; top: 80px; right: 20px; width: 320px; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 5000; padding: 20px;">
+        <h3 style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Notifications</h3>
+        <div id="notifList" style="max-height: 300px; overflow-y: auto;">
+            <!-- Notifs dynamic -->
+        </div>
+    </div>
+
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="container footer-grid">
+            <div class="footer-col" style="text-align: center;">
+                <h3 style="color: white;"><i class="fas fa-medal"></i> Turf Arena</h3>
+                <p>Excellence in sports management since 2018.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Turf Arena Management. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="dummy-data.js"></script>
+    <script src="navbar.js"></script>
+    <script src="login.js"></script>
+    <script src="ui.js"></script>
+    <script src="find-opponent.js"></script>
+</body>
+
+</html>
