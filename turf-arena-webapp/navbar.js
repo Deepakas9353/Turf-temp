@@ -19,21 +19,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Dropdown toggle on arrow click
-    document.querySelectorAll('.dropdown-arrow').forEach(arrow => {
-        arrow.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const parent = arrow.closest('.nav-item-dropdown');
+    // Mobile Specific: Split click between Link and Arrow
+    function initDropdowns() {
+        // 1. Toggling: only happen on arrow click
+        document.querySelectorAll('.dropdown-arrow').forEach(arrow => {
+            arrow.addEventListener('click', (e) => {
+                // Prevent navigation when clicking Arrow
+                e.preventDefault();
+                e.stopPropagation();
 
-            // Close other dropdowns
-            document.querySelectorAll('.nav-item-dropdown').forEach(item => {
-                if (item !== parent) item.classList.remove('show');
+                const parent = arrow.closest('.nav-item-dropdown');
+                const isShown = parent.classList.contains('show');
+
+                // Close other dropdowns
+                document.querySelectorAll('.nav-item-dropdown').forEach(item => {
+                    item.classList.remove('show');
+                });
+
+                if (!isShown) {
+                    parent.classList.add('show');
+                }
             });
-
-            parent.classList.toggle('show');
         });
-    });
+
+        // 2. Navigation: clicking the link should just work as normal
+        // No e.preventDefault() on the .nav-link inside dropdown-trigger-group
+        // We removed the listener on .dropdown-trigger-group to allow natural bubbling for links
+    }
+
+    // Initialize Dropdowns
+    initDropdowns();
 
     // Close on click outside
     window.addEventListener('click', () => {
